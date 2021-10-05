@@ -5,10 +5,8 @@ Created on Tue Jan 23 09:39:05 2018
 @author: Rowan, Gabe
 """
 
-import os
 import glob
 from Bio import SearchIO
-from Bio.Seq import Seq
 import re
 import models
 from bson.objectid import ObjectId

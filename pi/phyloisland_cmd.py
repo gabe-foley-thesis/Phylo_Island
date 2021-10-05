@@ -1,26 +1,16 @@
 import argparse
 import os
-import mongoengine
 import cmd_code
 import utilities
 import models
 import genome_overview
-from flask import Flask
-from flask_mongoengine import MongoEngine
-from bson.objectid import ObjectId
 import getGenomes
 import gzip
 import refseq_code
 import numpy
-from collections import defaultdict
-import alignment
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
-import time
-import pandas as pd
+
 import glob
 
-from Bio.Alphabet import generic_nucleotide
 
 
 parser = argparse.ArgumentParser()

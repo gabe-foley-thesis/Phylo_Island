@@ -1,13 +1,10 @@
 from gettext import gettext
-
 from flask_user import UserMixin, UserManager
 from werkzeug.datastructures import FileStorage
 from wtforms import ValidationError, fields
 from wtforms.validators import required
 from wtforms.widgets import FileInput
-
 from phyloisland import app, db
-
 
 class User(db.DynamicDocument, UserMixin):
     """

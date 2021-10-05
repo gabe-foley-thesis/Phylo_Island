@@ -29,14 +29,11 @@ import time
 import os
 from urllib.error import HTTPError
 import random
-import io
 import json
-import Bio
 import warnings
 import math
 from ete3 import PhyloTree
-from wtforms import SelectField
-import mongoengine
+
 
 ref_names = [
     "A1",

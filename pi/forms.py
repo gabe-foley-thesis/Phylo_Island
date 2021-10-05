@@ -29,10 +29,6 @@ class UploadForm(FlaskForm):
         "Upload the file that contains the information we will map to the genome records.",
         [validators.DataRequired()],
     )
-    # input_text = StringField(u'Input text', [validators.optional()])
-    # type = SelectField('What type of file is this?', [validators.DataRequired()],
-    #                    choices=[("protein", "FASTA (amino acids)"), ("nucleotide", "FASTA (nucleotides)"),
-    #                             ("species", "Species list"), ("genome", "Genome ID list"), ("profile", "Profile")])
     type = SelectField(
         "What type of file is this?",
         [validators.DataRequired()],
@@ -123,7 +119,6 @@ class GenomeDiagramSelectForm(FlaskForm):
     """
 
     genome = SelectField("Genome", choices=[])
-    # submit_diagram = SubmitField("Submit")
     tag_genome = SubmitField("Tag genome")
     clear_genome_tags = SubmitField("Clear genome tags")
     submit_hit = SubmitField("Add tag")
@@ -160,7 +155,6 @@ class GenomeDiagramPageForm(FlaskForm):
     genome_tagged = SelectField(choices=[])
     limit_selection = SubmitField("Limit selection")
     page = SelectField("Page to display", choices=[])
-    # select_page = SubmitField('Select page')
 
 
 class ChartsForm(FlaskForm):
@@ -217,15 +211,10 @@ class DownloadFastaForm(FlaskForm):
     )
 
     filename = StringField("Append extra text to filename?")
-
     include_genome = StringField("Only include genomes tagged with - ")
-
     exclude_genome = StringField("Exclude genomes tagged with - ")
-
     include_hits = StringField("Only include hits tagged with - ")
-
     exclude_hits = StringField("Exclude hits tagged with - ", default="hidden")
-
     translate = BooleanField("Translate nucleotides to proteins?", default="checked")
     align = BooleanField("Also create an alignment?")
 
@@ -403,13 +392,9 @@ class DownloadTags(FlaskForm):
 
 class DownloadRegionOrder(FlaskForm):
     include_genome = StringField("Only include genomes tagged with - ")
-
     exclude_genome = StringField("Exclude genomes tagged with - ")
-
     include_hits = StringField("Only include hits tagged with - ")
-
     exclude_hits = StringField("Exclude hits tagged with - ", default="hidden")
-
     save_to_db = BooleanField("Save to database as well", default="checked")
 
     submit = SubmitField("Submit")

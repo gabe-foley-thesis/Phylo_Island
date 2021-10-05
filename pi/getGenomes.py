@@ -225,8 +225,6 @@ def get_record_list(summary, category, single):
 
 def add_genome(species_name, categories, single):
 
-    print("got here")
-
     for x in ["reference genome", "representative genome", "assembly"]:
         if x in categories:
             database = "refseq"
@@ -274,21 +272,6 @@ def add_genome(species_name, categories, single):
             print(err)
 
             return
-
-            # print ("Trying with wget")
-            #
-            # print("Genome retrieval called with following command - ")
-            # print("wget -O  %s/assembly_summary.txt ftp.ncbi.nlm.nih.gov/genomes/%s/bacteria/%s/assembly_summary.txt" %
-            # ("./tmp",
-            #  database, species_name.replace(" ", "_")))
-            #
-            # print ()
-            # process = subprocess.Popen(
-            #     "wget -O  %s/assembly_summary.txt ftp.ncbi.nlm.nih.gov/genomes/%s/bacteria/%s/assembly_summary.txt" %
-            #     ("./tmp",
-            #         database, species_name.replace(" ", "_")), stderr=subprocess.PIPE,
-            #     stdout=subprocess.PIPE, shell=True)
-
         summary = pd.read_csv("./tmp/assembly_summary.txt", sep="\t", header=1)
 
         for category in categories:
@@ -417,15 +400,7 @@ def download_fasta_regions(
                     or bool(set(hit["tags"]).intersection(set(include_hits)))
                 ) and not bool(set(hit["tags"]).intersection(set(exclude_hits))):
 
-                    print("found hit")
-                    #
-                    # print()
-                    print(hit["name"])
-                    # print(hit['region'])
-                    #
-                    # print(hit['start'])
-                    # print(hit['end'])
-                    # print(hit['strand'])
+
 
                     sequence = Seq(hit["sequence"], generic_nucleotide)
 
@@ -482,19 +457,6 @@ def download_fasta_regions(
                     else:
 
                         fasta_dict[id_name] = fasta_record
-
-        # for hit_name, id_names in seq_count.items():
-        #     if len(id_names) > 1:
-        #         print('sorting')
-        #         for id_name in sorted(id_names, key=utilities.sort_func):
-        #             utilities.createFasta(fasta_dict[id_name], "./fasta_folder/" + filename + "_" + str(count),
-        #                                   align)
-        #
-        #             print (id_name)
-        #
-        #             fasta_dict.pop(id_name)
-        #             count += 1
-
     if fasta_dict:
 
         print(fasta_dict)
@@ -556,7 +518,7 @@ def tag_as_simple(genomes, exclude_hits):
 
         for hit in genome.hits:
 
-            # TODO: Chitinase is hard coded so that we still tag a genome as simple if it contains a Chitinase
+            # NOTE: Chitinase is hard coded so that we still tag a genome as simple if it contains a Chitinase
 
             if (
                 "expanded" in hit.region
@@ -571,10 +533,6 @@ def tag_as_simple(genomes, exclude_hits):
                 found_hits.add(hit.region)
 
         if simple:
-            print("This one is simple")
-            print(genome.name)
-            print(genome.tags)
-
             if "Simple" not in genome.tags:
                 print("Updating")
                 genome.update(push__tags="Simple")
@@ -626,14 +584,6 @@ def write_region_order(
                 and not bool(set(hit["tags"]).intersection(set(exclude_hits)))
             ]
         )
-
-        print("hits")
-
-        print(hits)
-
-        print("wallop")
-        print(genome.tags)
-
         # regions = [x[1] for x in hits]
 
         curr_pos = 0
@@ -658,14 +608,8 @@ def write_region_order(
                 regions.append(region[1])
             curr_pos = pos
 
-        print(regions)
-        print("******")
-
         renamed_regions = utilities.rename_duplicates(genome.name, regions)
 
-        print("renamed regions")
-
-        print(renamed_regions)
 
         with open(path, "a") as region_order:
             region_string = ",".join(x for x in renamed_regions)
@@ -692,13 +636,8 @@ def write_mlgo_order(
     # Clear previous file if it exists
     open(path, "w").close()
 
-    # region_id_count = 1
-    # seen_dict = {}
 
     for genome in genomes:
-        print("genome")
-        print(genome.name)
-
         hits = sorted(
             [
                 (int(hit.start), hit.region + "_strand=" + hit.strand)
@@ -707,35 +646,10 @@ def write_mlgo_order(
             ]
         )
 
-        # regions = [x[1] for x in hits]
-
-        # for hit in hits:
-        #
-        #
-        # print ('here come the regions')
-        #
-        # print (hits)
-
-        # print(regions)
-
-        # If we've already seen this region in another genome, give it that number, otherwise create new number
-        # for region in regions:
-        #     print ('pop')
-        #     print (region)
-        #
-        #     if region.split("_expanded_strand=")[0] in seen_dict.keys():
-        #         pass
-        #     else:
-        #         seen_dict[region.split("_strand=")[0]] = str(region_id_count)
-        #         region_id_count += 1
-
         regions = {}
         curr_pos = 0
 
         for hit in hits:
-            print("hit zero")
-            print(hit[0])
-            print(hit[1])
             if hit[0] == curr_pos:
                 if ("A2" in hit[1] or "A1" in hit[1] or "TcdA1" in hit[1]) and (
                     "A2" in regions[hit[0]]
@@ -762,10 +676,6 @@ def write_mlgo_order(
 
             curr_pos = hit[0]
 
-        print("done")
-
-        print(regions)
-
         # Override writing out Chitinases
         regions = [x for x in regions.values() if "Chitinase" not in x]
 
@@ -791,9 +701,6 @@ def write_mlgo_tree(tree, tree_path):
     open(tree_path, "w").close()
 
     rebuilt_tree = ""
-
-    print(tree)
-
     first_split = tree.decode().split(",")
 
     for x in first_split:
