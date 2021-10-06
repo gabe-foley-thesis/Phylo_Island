@@ -1,0 +1,91 @@
+# Assembly name:  ASM1103014v1
+# Organism name:  Morganella morganii (enterobacteria)
+# Infraspecific name:  strain=MMM_77
+# Taxid:          582
+# BioSample:      SAMN14120195
+# BioProject:     PRJNA607022
+# Submitter:      Lebanese American University
+# Date:           2020-02-26
+# Assembly type:  na
+# Release type:   major
+# Assembly level: Contig
+# Genome representation: full
+# WGS project:    JAAJRG01
+# Assembly method: SPAdes v. 3.13
+# Expected final version: yes
+# Genome coverage: 30x
+# Sequencing technology: Illumina MiSeq
+# GenBank assembly accession: GCA_011030145.1
+# RefSeq assembly accession: GCF_011030145.1
+# RefSeq assembly and GenBank assemblies identical: yes
+#
+## Assembly-Units:
+## GenBank Unit Accession	RefSeq Unit Accession	Assembly-Unit name
+## GCA_011030185.1	GCF_011030185.1	Primary Assembly
+#
+# Ordered by chromosome/plasmid; the chromosomes/plasmids are followed by
+# unlocalized scaffolds.
+# Unplaced scaffolds are listed at the end.
+# RefSeq is equal or derived from GenBank object.
+#
+# Sequence-Name	Sequence-Role	Assigned-Molecule	Assigned-Molecule-Location/Type	GenBank-Accn	Relationship	RefSeq-Accn	Assembly-Unit	Sequence-Length	UCSC-style-name
+NODE_10_length_188972_cov_13.5507	unplaced-scaffold	na	na	JAAJRG010000010.1	=	NZ_JAAJRG010000010.1	Primary Assembly	188972	na
+NODE_11_length_134832_cov_13.2409	unplaced-scaffold	na	na	JAAJRG010000011.1	=	NZ_JAAJRG010000011.1	Primary Assembly	134832	na
+NODE_12_length_74022_cov_14.0433	unplaced-scaffold	na	na	JAAJRG010000012.1	=	NZ_JAAJRG010000012.1	Primary Assembly	74022	na
+NODE_13_length_69288_cov_13.3937	unplaced-scaffold	na	na	JAAJRG010000013.1	=	NZ_JAAJRG010000013.1	Primary Assembly	69288	na
+NODE_14_length_57085_cov_13.9576	unplaced-scaffold	na	na	JAAJRG010000014.1	=	NZ_JAAJRG010000014.1	Primary Assembly	57085	na
+NODE_15_length_38808_cov_14.3151	unplaced-scaffold	na	na	JAAJRG010000015.1	=	NZ_JAAJRG010000015.1	Primary Assembly	38808	na
+NODE_16_length_32220_cov_14.3603	unplaced-scaffold	na	na	JAAJRG010000016.1	=	NZ_JAAJRG010000016.1	Primary Assembly	32220	na
+NODE_17_length_25272_cov_16.8296	unplaced-scaffold	na	na	JAAJRG010000017.1	=	NZ_JAAJRG010000017.1	Primary Assembly	25272	na
+NODE_18_length_11177_cov_13.9732	unplaced-scaffold	na	na	JAAJRG010000018.1	=	NZ_JAAJRG010000018.1	Primary Assembly	11177	na
+NODE_19_length_7612_cov_13.7085	unplaced-scaffold	na	na	JAAJRG010000019.1	=	NZ_JAAJRG010000019.1	Primary Assembly	7612	na
+NODE_1_length_603745_cov_13.1658	unplaced-scaffold	na	na	JAAJRG010000001.1	=	NZ_JAAJRG010000001.1	Primary Assembly	603745	na
+NODE_20_length_6824_cov_16.372	unplaced-scaffold	na	na	JAAJRG010000020.1	=	NZ_JAAJRG010000020.1	Primary Assembly	6824	na
+NODE_21_length_4696_cov_14.1698	unplaced-scaffold	na	na	JAAJRG010000021.1	=	NZ_JAAJRG010000021.1	Primary Assembly	4696	na
+NODE_22_length_3038_cov_112.256	unplaced-scaffold	na	na	JAAJRG010000022.1	=	NZ_JAAJRG010000022.1	Primary Assembly	3038	na
+NODE_23_length_1845_cov_2310.26	unplaced-scaffold	na	na	JAAJRG010000023.1	=	NZ_JAAJRG010000023.1	Primary Assembly	1845	na
+NODE_24_length_1294_cov_14.1474	unplaced-scaffold	na	na	JAAJRG010000024.1	=	NZ_JAAJRG010000024.1	Primary Assembly	1294	na
+NODE_25_length_1290_cov_129.771	unplaced-scaffold	na	na	JAAJRG010000025.1	=	NZ_JAAJRG010000025.1	Primary Assembly	1290	na
+NODE_26_length_1288_cov_31.4884	unplaced-scaffold	na	na	JAAJRG010000026.1	=	NZ_JAAJRG010000026.1	Primary Assembly	1288	na
+NODE_27_length_1172_cov_31.422	unplaced-scaffold	na	na	JAAJRG010000027.1	=	NZ_JAAJRG010000027.1	Primary Assembly	1172	na
+NODE_28_length_820_cov_50.7792	unplaced-scaffold	na	na	JAAJRG010000028.1	=	NZ_JAAJRG010000028.1	Primary Assembly	820	na
+NODE_29_length_806_cov_118.829	unplaced-scaffold	na	na	JAAJRG010000029.1	=	NZ_JAAJRG010000029.1	Primary Assembly	806	na
+NODE_2_length_545833_cov_12.4826	unplaced-scaffold	na	na	JAAJRG010000002.1	=	NZ_JAAJRG010000002.1	Primary Assembly	545833	na
+NODE_30_length_738_cov_63.1047	unplaced-scaffold	na	na	JAAJRG010000030.1	=	NZ_JAAJRG010000030.1	Primary Assembly	738	na
+NODE_31_length_512_cov_62.5766	unplaced-scaffold	na	na	JAAJRG010000031.1	=	NZ_JAAJRG010000031.1	Primary Assembly	512	na
+NODE_32_length_450_cov_0.764706	unplaced-scaffold	na	na	JAAJRG010000032.1	=	NZ_JAAJRG010000032.1	Primary Assembly	450	na
+NODE_33_length_439_cov_0.724359	unplaced-scaffold	na	na	JAAJRG010000033.1	=	NZ_JAAJRG010000033.1	Primary Assembly	439	na
+NODE_34_length_434_cov_0.661238	unplaced-scaffold	na	na	JAAJRG010000034.1	=	NZ_JAAJRG010000034.1	Primary Assembly	434	na
+NODE_35_length_427_cov_0.823333	unplaced-scaffold	na	na	JAAJRG010000035.1	=	NZ_JAAJRG010000035.1	Primary Assembly	427	na
+NODE_36_length_423_cov_0.831081	unplaced-scaffold	na	na	JAAJRG010000036.1	=	NZ_JAAJRG010000036.1	Primary Assembly	423	na
+NODE_37_length_419_cov_0.921233	unplaced-scaffold	na	na	JAAJRG010000037.1	=	NZ_JAAJRG010000037.1	Primary Assembly	419	na
+NODE_38_length_417_cov_0.8	unplaced-scaffold	na	na	JAAJRG010000038.1	=	NZ_JAAJRG010000038.1	Primary Assembly	417	na
+NODE_39_length_414_cov_0.860627	unplaced-scaffold	na	na	JAAJRG010000039.1	=	NZ_JAAJRG010000039.1	Primary Assembly	414	na
+NODE_3_length_496803_cov_13.4872	unplaced-scaffold	na	na	JAAJRG010000003.1	=	NZ_JAAJRG010000003.1	Primary Assembly	496803	na
+NODE_40_length_408_cov_0.786477	unplaced-scaffold	na	na	JAAJRG010000040.1	=	NZ_JAAJRG010000040.1	Primary Assembly	408	na
+NODE_41_length_407_cov_0.807143	unplaced-scaffold	na	na	JAAJRG010000041.1	=	NZ_JAAJRG010000041.1	Primary Assembly	407	na
+NODE_42_length_406_cov_0.741935	unplaced-scaffold	na	na	JAAJRG010000042.1	=	NZ_JAAJRG010000042.1	Primary Assembly	406	na
+NODE_43_length_405_cov_0.744604	unplaced-scaffold	na	na	JAAJRG010000043.1	=	NZ_JAAJRG010000043.1	Primary Assembly	405	na
+NODE_44_length_402_cov_1.02182	unplaced-scaffold	na	na	JAAJRG010000044.1	=	NZ_JAAJRG010000044.1	Primary Assembly	402	na
+NODE_45_length_397_cov_0.803704	unplaced-scaffold	na	na	JAAJRG010000045.1	=	NZ_JAAJRG010000045.1	Primary Assembly	397	na
+NODE_46_length_390_cov_0.889734	unplaced-scaffold	na	na	JAAJRG010000046.1	=	NZ_JAAJRG010000046.1	Primary Assembly	390	na
+NODE_47_length_387_cov_0.803846	unplaced-scaffold	na	na	JAAJRG010000047.1	=	NZ_JAAJRG010000047.1	Primary Assembly	387	na
+NODE_49_length_379_cov_0.952381	unplaced-scaffold	na	na	JAAJRG010000048.1	=	NZ_JAAJRG010000048.1	Primary Assembly	379	na
+NODE_4_length_403983_cov_13.4183	unplaced-scaffold	na	na	JAAJRG010000004.1	=	NZ_JAAJRG010000004.1	Primary Assembly	403983	na
+NODE_50_length_379_cov_0.972222	unplaced-scaffold	na	na	JAAJRG010000049.1	=	NZ_JAAJRG010000049.1	Primary Assembly	379	na
+NODE_51_length_317_cov_15.6368	unplaced-scaffold	na	na	JAAJRG010000050.1	=	NZ_JAAJRG010000050.1	Primary Assembly	317	na
+NODE_52_length_260_cov_20.2331	unplaced-scaffold	na	na	JAAJRG010000051.1	=	NZ_JAAJRG010000051.1	Primary Assembly	260	na
+NODE_53_length_257_cov_55.7846	unplaced-scaffold	na	na	JAAJRG010000052.1	=	NZ_JAAJRG010000052.1	Primary Assembly	257	na
+NODE_54_length_251_cov_22.0403	unplaced-scaffold	na	na	JAAJRG010000053.1	=	NZ_JAAJRG010000053.1	Primary Assembly	251	na
+NODE_55_length_251_cov_53.4194	unplaced-scaffold	na	na	JAAJRG010000054.1	=	NZ_JAAJRG010000054.1	Primary Assembly	251	na
+NODE_56_length_246_cov_76.7647	unplaced-scaffold	na	na	JAAJRG010000055.1	=	NZ_JAAJRG010000055.1	Primary Assembly	246	na
+NODE_57_length_222_cov_69.5053	unplaced-scaffold	na	na	JAAJRG010000056.1	=	NZ_JAAJRG010000056.1	Primary Assembly	222	na
+NODE_58_length_222_cov_44.5053	unplaced-scaffold	na	na	JAAJRG010000057.1	=	NZ_JAAJRG010000057.1	Primary Assembly	222	na
+NODE_59_length_216_cov_13.8315	unplaced-scaffold	na	na	JAAJRG010000058.1	=	NZ_JAAJRG010000058.1	Primary Assembly	216	na
+NODE_5_length_319274_cov_13.232	unplaced-scaffold	na	na	JAAJRG010000005.1	=	NZ_JAAJRG010000005.1	Primary Assembly	319274	na
+NODE_60_length_214_cov_54.8506	unplaced-scaffold	na	na	JAAJRG010000059.1	=	NZ_JAAJRG010000059.1	Primary Assembly	214	na
+NODE_61_length_201_cov_35.6351	unplaced-scaffold	na	na	JAAJRG010000060.1	=	NZ_JAAJRG010000060.1	Primary Assembly	201	na
+NODE_6_length_251514_cov_13.2724	unplaced-scaffold	na	na	JAAJRG010000006.1	=	NZ_JAAJRG010000006.1	Primary Assembly	251514	na
+NODE_7_length_215943_cov_13.3919	unplaced-scaffold	na	na	JAAJRG010000007.1	=	NZ_JAAJRG010000007.1	Primary Assembly	215943	na
+NODE_8_length_197004_cov_12.5063	unplaced-scaffold	na	na	JAAJRG010000008.1	=	NZ_JAAJRG010000008.1	Primary Assembly	197004	na
+NODE_9_length_192723_cov_13.2434	unplaced-scaffold	na	na	JAAJRG010000009.1	=	NZ_JAAJRG010000009.1	Primary Assembly	192723	na

@@ -3,15 +3,9 @@ from ete3 import (
     Tree,
     TreeStyle,
     TextFace,
-    add_face_to_node,
     SeqMotifFace,
-    NodeStyle,
-    faces,
-    ImgFace,
-    CircleFace,
-    AttrFace,
+    NodeStyle
 )
-import os
 import sys
 import argparse
 import pickle
@@ -31,12 +25,6 @@ def load_tree(tree_path, aln_path=None):
     """
     tree = Tree(tree_path, format=1)
     return tree
-
-
-###
-###
-###
-
 
 def get_region_domains(regions):
     region_domains = []

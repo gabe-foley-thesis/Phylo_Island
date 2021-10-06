@@ -4,7 +4,6 @@ from flask import flash
 import random
 import time
 import subprocess
-import sys
 from collections import defaultdict
 import json
 import regex as re
@@ -12,10 +11,8 @@ import shutil
 import glob
 import tree_code
 from Bio.Seq import Seq
-from Bio.Alphabet import generic_nucleotide
 from Bio.SeqRecord import SeqRecord
 from Bio import SeqIO, AlignIO, SearchIO
-from Bio.Align.Applications import MuscleCommandline
 import pickle
 import ete3
 from configs.auto_classifier import original_classifications
@@ -207,7 +204,7 @@ def save_profile(profile, name=None):
     if not name:
         name = randstring(5)
 
-    profile_entry = models.Profile(name, profile, {})
+    profile_entry = models.Profile(name=name, profile=profile, references={})
     profile_entry.save()
 
 
@@ -241,9 +238,9 @@ def set_profile_as_reference(profile_ids, region):
         curr.save()
 
         # Write the new profile to the tmp folder ready to be used
-        with open("tmp/" + region + "_profile.hmm", "wb") as profile_path:
+        with open("pi/tmp/" + region + "_profile.hmm", "w+") as profile_path:
 
-            profile_path.write(curr.profile.read())
+            profile_path.write(curr.profile.read().decode())
 
             # flash("The profile named %s has been set as the reference profile for %s" % (curr.name, region), category='success')
 
@@ -259,7 +256,7 @@ def search_regions_with_profiles(region_to_search, profile_ids):
 
     regions = models.RegionRecords.objects.get(name=region_to_search)
 
-    profile_folder = f"./tmp/profiles_{regions.name}/"
+    profile_folder = f"./pi/tmp/profiles_{regions.name}/"
 
     os.mkdir(profile_folder)
 
@@ -281,7 +278,7 @@ def search_regions_with_profiles(region_to_search, profile_ids):
     for profile_id in profile_ids:
         profile = models.Profile.objects().get(id=profile_id)
 
-        with open(profile_folder + profile.name + "_profile.hmm", "wb") as profile_path:
+        with open(profile_folder + profile.name + "_profile.hmm", "w+") as profile_path:
             profile_path.write(profile.profile.read())
 
         while not os.path.exists(profile_folder + profile.name + "_profile.hmm"):
@@ -345,8 +342,8 @@ def process_hmmer_results(region_dict, profile_folder):
 def make_alignment_from_regions(aln_name, region_data, tool="MAFFT"):
     # Write out region data to a FASTA file
 
-    fasta_path = "./tmp/" + aln_name + ".fasta"
-    aln_path = "./tmp/" + aln_name + ".aln"
+    fasta_path = "./pi/tmp/" + aln_name + ".fasta"
+    aln_path = "./pi/tmp/" + aln_name + ".aln"
 
     with open(fasta_path, "w+") as fasta_file:
         fasta_file.write(region_data)
@@ -375,7 +372,7 @@ def load_list(*args):
 
 
 def get_sequence_content_dict(region):
-    fasta_path = "./tmp/tmp_regions.fasta"
+    fasta_path = "./pi/tmp/tmp_regions.fasta"
 
     alns = models.AlignmentRecords.objects().get(name=region)
 
@@ -398,8 +395,8 @@ def get_sequence_content_dict(region):
 
 
 def make_tree(alignment_name, alignment, tool):
-    aln_path = "./tmp/" + alignment_name + ".aln"
-    tree_path = "./tmp/" + alignment_name + ".nwk"
+    aln_path = "./pi/tmp/" + alignment_name + ".aln"
+    tree_path = "./pi/tmp/" + alignment_name + ".nwk"
 
     with open(aln_path, "w+") as fasta_file:
         fasta_file.write(alignment)
@@ -431,13 +428,13 @@ def get_tree_image(
     display_circular,
     display_circular_180,
 ):
-    tree_path = f"./tmp/{tree_name}.nwk"
-    img_path = f"static/img/trees/{tree_name}{'_full' if full_names else ''}{'_collapse' if collapse_on_genome_tags else ''}{'_rd' if region_dict else ''}{'_ro' if region_order_dict else ''}{'_sc' if sequence_content_dict else ''}{'_circ' if display_circular else ''}{'_circ180' if display_circular_180 else ''}.png"
-    tag_dict_path = f"./tmp/{tree_name}_tagdict.p"
-    region_dict_path = f"./tmp/{tree_name}_regiondict.p"
-    region_order_dict_path = f"./tmp/{tree_name}_regionorderdict.p"
-    sequence_content_dict_path = f"./tmp/{tree_name}_seqcontentdict.p"
-    colour_dict_path = f"./tmp/{tree_name}_colourdict.p"
+    tree_path = f"./pi/tmp/{tree_name}.nwk"
+    img_path = f"pi/static/img/trees/{tree_name}{'_full' if full_names else ''}{'_collapse' if collapse_on_genome_tags else ''}{'_rd' if region_dict else ''}{'_ro' if region_order_dict else ''}{'_sc' if sequence_content_dict else ''}{'_circ' if display_circular else ''}{'_circ180' if display_circular_180 else ''}.png"
+    tag_dict_path = f"./pi/tmp/{tree_name}_tagdict.p"
+    region_dict_path = f"./pi/tmp/{tree_name}_regiondict.p"
+    region_order_dict_path = f"./pi/tmp/{tree_name}_regionorderdict.p"
+    sequence_content_dict_path = f"./pi/tmp/{tree_name}_seqcontentdict.p"
+    colour_dict_path = f"./pi/tmp/{tree_name}_colourdict.p"
 
     print(img_path)
 
@@ -538,10 +535,10 @@ def get_taxids(tree):
 
 
 def get_ml_go_tree_image(tree, name, ancestral_orders, ref_ml_go_dict):
-    tree_path = f"./tmp/{name}_ml.nwk"
-    img_path = f"static/img/trees/{name}_ml.png"
-    ancestral_orders_path = f"./tmp/{name}_ancestralorders.p"
-    ref_ml_go_dict_path = f"./tmp/{name}_ref_ml_go_dict.p"
+    tree_path = f"./pi/tmp/{name}_ml.nwk"
+    img_path = f"pi/static/img/trees/{name}_ml.png"
+    ancestral_orders_path = f"./pi/tmp/{name}_ancestralorders.p"
+    ref_ml_go_dict_path = f"./pi/tmp/{name}_ref_ml_go_dict.p"
 
     # Write out tree to file
     with open(tree_path, "w+") as tree_file:
@@ -570,8 +567,8 @@ def get_ml_go_tree_image(tree, name, ancestral_orders, ref_ml_go_dict):
 
 
 def create_pos_dict(regions, profile, trimmed_name, fasta_path):
-    profile_path = "./tmp/" + trimmed_name + ".hmm"
-    results_outpath = "./tmp/" + trimmed_name + "_results.txt"
+    profile_path = "./pi/tmp/" + trimmed_name + ".hmm"
+    results_outpath = "./pi/tmp/" + trimmed_name + "_results.txt"
 
     # Write out regions
 
@@ -623,8 +620,8 @@ def get_pos_dict_from_hmm(path, seqs):
 
 
 def trim_to_profile(regions, profile, trimmed_name):
-    fasta_path = "./tmp/" + trimmed_name + ".fasta"
-    trimmed_path = "./tmp/" + trimmed_name + "_trimmed"
+    fasta_path = "./pi/tmp/" + trimmed_name + ".fasta"
+    trimmed_path = "./pi/tmp/" + trimmed_name + "_trimmed"
 
     pos_dict = create_pos_dict(regions, profile, trimmed_name, fasta_path)
 
@@ -658,8 +655,8 @@ def trim_to_profile(regions, profile, trimmed_name):
 
 
 def trim_around_profile(regions, profile1, profile2, pos1, pos2, trimmed_name):
-    fasta_path = "./tmp/" + trimmed_name + ".fasta"
-    trimmed_path = "./tmp/" + trimmed_name + "_trimmed"
+    fasta_path = "./pi/tmp/" + trimmed_name + ".fasta"
+    trimmed_path = "./pi/tmp/" + trimmed_name + "_trimmed"
 
     if profile1:
         pos_dict1 = create_pos_dict(regions, profile1, trimmed_name, fasta_path)
@@ -826,15 +823,15 @@ def pickle_dict(dict, outpath):
 
 
 def createProfile(align_list):
-    SeqIO.write(align_list, "tmp/align.fasta", "fasta")
+    SeqIO.write(align_list, "pi/tmp/align.fasta", "fasta")
 
-    hmm_path = "tmp/profile3.hmm"
+    hmm_path = "pi/tmp/profile3.hmm"
 
-    createAlignment("tmp/align.fasta", "tmp/align.aln")
+    createAlignment("pi/tmp/align.fasta", "tmp/align.aln")
 
-    outfile = open(hmm_path, "w")
+    outfile = open(hmm_path, "w+")
     result = subprocess.call(
-        ["hmmbuild", hmm_path, "tmp/align.aln"], stdout=subprocess.PIPE
+        ["hmmbuild", hmm_path, "pi/tmp/align.aln"], stdout=subprocess.PIPE
     )
 
     while not os.path.exists(hmm_path):
@@ -844,7 +841,7 @@ def createProfile(align_list):
         file = open(hmm_path, "rb")
 
         save_profile(file)
-        remove_file(hmm_path, "tmp/align.fasta", "tmp/align.aln")
+        remove_file(hmm_path, "pi/tmp/align.fasta", "pi/tmp/align.aln")
 
 
 def createFasta(fasta_list, name, align):
@@ -1000,7 +997,7 @@ def get_genome_items(
                         stop_codons = ["TAG", "TAA", "TGA"]
 
                         if hit.strand == "backward":
-                            sequence = Seq(hit.sequence, generic_nucleotide)
+                            sequence = Seq(hit.sequence)
 
                             hit_sequence = sequence.reverse_complement()
                         else:

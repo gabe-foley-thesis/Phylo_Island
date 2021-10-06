@@ -6,9 +6,8 @@ import models
 import genome_overview
 import getGenomes
 import gzip
-import refseq_code
 import numpy
-
+import refseq_code as refseq_code
 import glob
 
 

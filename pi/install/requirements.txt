@@ -5,6 +5,7 @@ dominate==2.6.0
 email-validator==1.1.3
 ete3==3.1.2
 Flask
+flask_admin
 flask-user
 Flask-Bootstrap==3.3.7.1
 Flask-JSGlue==0.3.1
@@ -18,11 +19,11 @@ Jinja2==3.0.1
 MarkupSafe==2.0.1
 mongoengine==0.23.1
 numpy>=1.19
+pandas
 pillow===8.3.2
 pymongo==3.12.0
-PyQt5==5.15.4
-PyQt5-Qt5==5.15.2
-PyQt5-sip==12.9.0
+pyqt5
+regex==2021.9.30
 typing-extensions==3.10.0.2
 visitor==0.1.3
 werkzeug==0.16.1

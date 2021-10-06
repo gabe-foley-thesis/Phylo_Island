@@ -2,7 +2,6 @@ import argparse, subprocess, sys, fnmatch
 from ftplib import FTP
 import gzip
 from Bio import SeqIO
-from Bio.Alphabet import generic_nucleotide
 from datetime import datetime, MINYEAR
 import pandas as pd
 from collections import defaultdict
@@ -87,7 +86,7 @@ def retrieve_genome(records, species_name, category, database):
             species_name.replace(" ", "_"),
             folder,
             location,
-            "./tmp",
+            "./pi/tmp",
         )
     )
     time.sleep(1)
@@ -102,7 +101,7 @@ def retrieve_genome(records, species_name, category, database):
                 species_name.replace(" ", "_"),
                 folder,
                 location,
-                "./tmp",
+                "./pi/tmp",
             ),
             stderr=subprocess.PIPE,
             stdout=subprocess.PIPE,
@@ -402,7 +401,7 @@ def download_fasta_regions(
 
 
 
-                    sequence = Seq(hit["sequence"], generic_nucleotide)
+                    sequence = Seq(hit["sequence"])
 
                     if hit["strand"] == "backward":
                         sequence = sequence.reverse_complement()

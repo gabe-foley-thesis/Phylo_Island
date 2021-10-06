@@ -19,7 +19,6 @@ from flask_login import login_required, current_user, user_logged_in
 from flask_admin import Admin, expose, BaseView
 from flask_admin.actions import action
 from flask_admin.contrib.mongoengine import ModelView, filters
-from Bio.Alphabet import generic_protein
 from Bio.SeqRecord import SeqRecord
 from Bio.Seq import Seq
 from markupsafe import Markup
@@ -389,7 +388,7 @@ class RegionView(BaseView):
                 .decode()
             )
 
-            temp_path = "./tmp/tmp_alignment.aln"
+            temp_path = "./pi/tmp/tmp_alignment.aln"
 
             with open(temp_path, "w+") as temp_align:
                 temp_align.write(alignment)
@@ -536,7 +535,7 @@ class RegionView(BaseView):
 
             print(os.getcwd())
 
-            tree_path = "./tmp/tmptree.nwk"
+            tree_path = "./pi/tmp/tmptree.nwk"
 
             phylo_tree.write(outfile=tree_path)
 
@@ -1231,7 +1230,7 @@ class SequenceRecordsView(ModelView):
             align_list = []
             for record in query.all():
                 align_record = SeqRecord(
-                    Seq(record.sequence, generic_protein),
+                    Seq(record.sequence),
                     id=str(record.name) + "_" + "seq",
                 )
                 align_list.append(align_record)
