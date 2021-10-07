@@ -52,13 +52,17 @@ def update_genomes():
 
     genomes = [x.id for x in queries]
 
+    print('ghosty')
+    print(genomes)
+
     del queries
 
-    chunk = numpy.array_split(numpy.array(genomes), 100)
+    chunk = numpy.array_split(numpy.array(genomes), max(1, round(len(genomes) / 100)))
 
     print ('chunk')
 
     print (chunk)
+    print(len(chunk))
 
     for genomes in chunk:
         queries = models.GenomeRecords.objects.all().timeout(False)
@@ -66,7 +70,7 @@ def update_genomes():
         profiles = models.Profile.objects.all()
 
         for profile in profiles:
-            get_feature_location_with_profile_cmd(queries, "hmm_outputs", profile.name, "", "", profile.name)
+            get_feature_location_with_profile_cmd(queries, "pi/hmm_outputs", profile.name, "", "", profile.name)
 
         del profiles
         del queries

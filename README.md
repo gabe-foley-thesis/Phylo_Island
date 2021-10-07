@@ -44,7 +44,6 @@ python pi/phyloisland.py
 
 ```
 
-
 You can now open a web browser and navigate to http://127.0.0.1:5000/ and you will see the Phylo Island GUI.
 
 5. Register as a new user (there is no email validation needed in the current version)
@@ -62,4 +61,6 @@ You can now open a web browser and navigate to http://127.0.0.1:5000/ and you wi
 
 
 # Notes
+
+- Phylo Island uses session data to store certain data to help loading pages. If you run into a 404 Error try logging out and in again.
 
