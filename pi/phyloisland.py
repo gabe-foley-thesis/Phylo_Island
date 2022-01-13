@@ -6,10 +6,12 @@ from flask_jsglue import JSGlue
 from mongoengine import connect
 import configs.mongoconfig
 
+# Create the app
 app = Flask(__name__)
 jsglue = JSGlue(app)
 Bootstrap(app)
 
+# Read the config file (set database within here)
 app.config.from_pyfile("configs/mongoconfig.py")
 
 # Connect the database

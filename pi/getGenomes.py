@@ -14,49 +14,7 @@ import json
 import time
 
 
-def read_genome(outpath, species_name):
 
-    # Collate all of the nucleotide records together to make the genome
-    concatenated_genome = ""
-
-    my_dict = SeqIO.to_dict(SeqIO.parse(outpath, "fasta"))
-    for r in sorted(my_dict.values(), key=operator.attrgetter("id")):
-
-        concatenated_genome += str(r.seq)
-        description = r.description
-        genome_id = r.id
-
-        # if r.id == "NZ_NIBS01000003.1":
-        #     print (concatenated_genome)
-
-        # if "plasmid" not in r.description:
-        #     print ('Was not a plasmid')
-        #     print (r.description)
-        #     # concatenated_genome += str(r.seq)
-        #     # description = r.description
-        #     # genome_id = r.id
-        #
-        # else:
-        #     # print ('Was a plasmid')
-        #     # print (r.description)
-
-        # Temporary measure to reduce the name so it can fit in the database. Edge case but occurs with
-        # 'bacterium endosymbiont of Mortierella elongata FMR23-6', for example
-
-        if len(species_name) > 40:
-            species_name = species_name[0:40]
-
-    return SeqRecord(
-        Seq(concatenated_genome),
-        id=genome_id,
-        name=species_name,
-        description=description,
-        annotations={
-            "organism": species_name,
-            "source": "",
-            "plasmid": True if "plasmid" in description else False,
-        },
-    )
 
 
 def retrieve_genome(records, species_name, category, database):

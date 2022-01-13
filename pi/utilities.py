@@ -17,8 +17,6 @@ import pickle
 import ete3
 from configs.auto_classifier import original_classifications
 
-# from genome_overview import models
-
 import getGenomes
 
 region_name_mapper = {
