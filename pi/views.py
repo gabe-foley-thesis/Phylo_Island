@@ -48,25 +48,6 @@ ref_names = [
     "existing_feature",
 ]
 
-ref_mlgo_dict = {
-    "A1": "1",
-    "A2": "2",
-    "Chitinase": "3",
-    "TcB": "4",
-    "TcC": "5",
-    "TcdA1": "6",
-    "Fused_TcB_TcC": "7",
-}
-mlgo_ref_dict = {
-    "1": "A1",
-    "2": "A2",
-    "3": "Chitinase",
-    "4": "TcB",
-    "5": "TcC",
-    "6": "TcdA1",
-    "7": "Fused_TcB_TcC",
-}
-
 
 @user_logged_in.connect_via(app)
 def on_user_logged_in(sender, user):
@@ -1094,121 +1075,6 @@ class DownloadRegionOrderView(BaseView):
             form=form,
             region_order_names=region_order_names,
         )
-
-# Not currently used
-# class DownloadMLGOView(BaseView):
-#     @login_required
-#     @expose("/", methods=("GET", "POST"))
-#     def setup(self):
-#         form = forms.DownloadMLGO()
-#         tree_form = forms.DownloadMLGOTree()
-#
-#         tree_choices = [(tree.name, tree.name) for tree in models.TreeRecords.objects()]
-#
-#         tree_form.tree_select_name.choices = tree_choices
-#
-#         if request.method == "POST" and form.submit.data:
-#             if form.submit.data:
-#                 try:
-#                     fasta_dict = {}
-#                     include_genome = form.include_genome.data.split(",")
-#                     exclude_genome = form.exclude_genome.data.split(",")
-#                     include_hits = form.include_hits.data.split(",")
-#                     exclude_hits = form.exclude_hits.data.split(",")
-#
-#                     if include_genome == [""]:
-#                         genomes = models.GenomeRecords.objects(tags__nin=exclude_genome)
-#                     else:
-#                         genomes = models.GenomeRecords.objects(
-#                             tags__in=include_genome, tags__nin=exclude_genome
-#                         )
-#
-#                     getGenomes.write_mlgo_order(genomes, ref_mlgo_dict=ref_mlgo_dict)
-#
-#                     flash(
-#                         "Downloaded file to fasta_folder/mlgo.txt", category="success"
-#                     )
-#
-#                 except Exception as e:
-#                     print(e)
-#                     flash(e, category="error")
-#         if request.method == "POST" and tree_form.download_mlgo_tree.data:
-#             tree = models.TreeRecords.objects.get(name=tree_form.tree_select_name.data)
-#
-#             tree_path = "fasta_folder/" + tree.name + "_mlgo.nwk"
-#
-#             print(tree)
-#
-#             getGenomes.write_mlgo_tree(tree.tree, tree_path)
-#
-#             flash("Downloaded file to " + tree_path, category="success")
-#
-#         return self.render("download_MLGO.html", form=form, tree_form=tree_form)
-#
-#
-# class VisualiseMLGOView(BaseView):
-#     @login_required
-#     @expose("/", methods=("GET", "POST"))
-#     def setup(self):
-#         upload_form = forms.UploadMLGOTree()
-#         select_form = forms.SelectMLGOTree()
-#
-#         tree_img = ""
-#
-#         tree_choices = [
-#             (tree.name, tree.name) for tree in models.MLGOTreeRecords.objects()
-#         ]
-#
-#         print(tree_choices)
-#
-#         select_form.select_name.choices = tree_choices
-#
-#         if request.method == "POST" and upload_form.upload.data:
-#             # annotated_tree = open(upload_form.annotated_tree.data, "r+")
-#             # gene_order = open(upload_form.gene_order.data, "r+")
-#             # mlgo_tree = models.MLGOTreeRecords(upload_form.upload_name.data, annotated_tree,
-#             #                                    gene_order)
-#
-#             mlgo_dict = utilities.get_mlgo_dict(
-#                 upload_form.gene_order.data.read().decode()
-#             )
-#
-#             mlgo_tree = models.MLGOTreeRecords(
-#                 upload_form.upload_name.data, upload_form.annotated_tree.data, mlgo_dict
-#             )
-#
-#             mlgo_tree.save()
-#
-#             flash(
-#                 "Uploaded ML Gene Order tree "
-#                 + upload_form.upload_name.data
-#                 + " to database"
-#             )
-#
-#         if request.method == "POST" and select_form.select.data:
-#             tree = models.MLGOTreeRecords.objects().get(
-#                 name=select_form.select_name.data
-#             )
-#
-#             # print(tree)
-#             # print (tree.tree.read().decode())
-#
-#             tree_img = utilities.get_ml_go_tree_image(
-#                 tree.tree.read().decode(),
-#                 tree.name,
-#                 tree.ancestral_orders,
-#                 mlgo_ref_dict,
-#             )
-#
-#             tree_img = "/" + tree_img + "#" + utilities.randstring(5)
-#
-#         return self.render(
-#             "visualise_MLGO.html",
-#             upload_form=upload_form,
-#             select_form=select_form,
-#             tree_img=tree_img,
-#         )
-
 
 class SequenceRecordsView(ModelView):
     edit_modal = True
@@ -3020,12 +2886,6 @@ with warnings.catch_warnings():
             name="Download Region Order", endpoint="download_region_order"
         )
     )
-    # admin.add_view(
-    #     DownloadMLGOView(name="Download ML Gene Order", endpoint="download_mlgo")
-    # )
-    # admin.add_view(
-    #     VisualiseMLGOView(name="Visualise ML Gene Order", endpoint="visualise_mlgo")
-    # )
 
     # admin.add_view(TempFixView(name='Temp Fix', endpoint='temp_fix'))
     admin.add_view(
