@@ -533,38 +533,6 @@ def get_taxids(tree):
     return taxids
 
 
-def get_ml_go_tree_image(tree, name, ancestral_orders, ref_ml_go_dict):
-    tree_path = f"./pi/tmp/{name}_ml.nwk"
-    img_path = f"pi/static/img/trees/{name}_ml.png"
-    ancestral_orders_path = f"./pi/tmp/{name}_ancestralorders.p"
-    ref_ml_go_dict_path = f"./pi/tmp/{name}_ref_ml_go_dict.p"
-
-    # Write out tree to file
-    with open(tree_path, "w+") as tree_file:
-        tree_file.write(tree)
-
-    while not os.path.exists(tree_path):
-        time.sleep(1)
-
-    pickle_dict(ancestral_orders, ancestral_orders_path)
-    pickle_dict(ref_ml_go_dict, ref_ml_go_dict_path)
-
-    if os.path.isfile(tree_path):
-
-        print("call it")
-        print(tree_path)
-        print(img_path)
-        print(ancestral_orders_path)
-        stdoutdata = subprocess.getoutput(
-            f"python tree_code.py -t {tree_path} -o {img_path} -ao {ancestral_orders_path} -mlgo {ref_ml_go_dict_path}"
-        )
-
-        print(stdoutdata)
-
-        if os.path.isfile(img_path):
-            return img_path
-
-
 def create_pos_dict(regions, profile, trimmed_name, fasta_path):
     profile_path = "./pi/tmp/" + trimmed_name + ".hmm"
     results_outpath = "./pi/tmp/" + trimmed_name + "_results.txt"
@@ -1360,22 +1328,6 @@ def delete_all_tags():
         query.save()
 
     models.GenomeTags.objects().all().delete()
-
-
-def get_mlgo_dict(gene_orders):
-    mlgo_dict = {}
-
-    lines = gene_orders.split("\n")
-    for i in range(0, len(lines)):
-        line = lines[i]
-        if line.startswith(">"):
-            mlgo_dict[line.split(">")[1].strip()] = (
-                lines[i + 1].split("$")[0].strip().split(" ")
-            )
-
-    print(mlgo_dict)
-
-    return mlgo_dict
 
 
 def colour_alignment_by_profiles(alignment, profiles):

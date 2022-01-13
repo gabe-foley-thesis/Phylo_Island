@@ -48,16 +48,14 @@ parser.add_argument(
     help="classify genomes based on their regions ",
     action="store_true",
 )
-parser.add_argument(
-    "-m", "--mlgo", help="write out regions to mlgo format", action="store_true"
-)
+
 parser.add_argument("--refseq", help="run full refseq check", action="store_true")
 parser.add_argument("--query_db", help="query db", action="store_true")
 parser.add_argument("--load_genomes", help="load genomes")
 
 parser.add_argument("--delete_all_profiles", action="store_true")
 
-parser.add_argument
+# parser.add_argument
 
 args = parser.parse_args()
 
@@ -112,10 +110,6 @@ if args.region_order:
     getGenomes.write_genome_order(
         genomes, split_strands=False, path="./fasta_folder/genome_order_from_cmd.txt"
     )
-
-if args.mlgo:
-    genomes = models.GenomeRecords.objects.all().timeout(False)
-    getGenomes.write_mlgo_order(genomes, path="./fasta_folder/mlgo.txt")
 
 
 if args.query_db:

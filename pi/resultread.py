@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 23 09:39:05 2018
-
-@author: Rowan, Gabe
-"""
-
 import glob
 from Bio import SearchIO
 import re
@@ -14,19 +7,19 @@ from bson.objectid import ObjectId
 
 def expandStartPostion(record, hit_start, strand):
     """
-    Extend a HMMER hit
-    :param record:
-    :param hit_start:
-    :param strand:
+    Extend a HMMER hit until we get to a full open reading frame
+
+    Expanding leftwards on a genome, so at the start of something on the forward strand, but at the end of
+    something on the backwards strand.
+
+    So we want to return the start position if we're on the forward strand, otherwise we want to return the
+    position just before the stop codon
+
+    :param record: The genome record
+    :param hit_start: Where the hit starts
+    :param strand: The strand we are on
     :return:
     """
-
-    # Expanding leftwards on a genome, so at the start of something on the forward strand, but at the end of
-    # something on the backwards strand.
-    # So we want to return the start position if we're on the forward strand, otherwise we want to return the
-    # position just before the stop codon
-
-    print(strand)
 
     if strand == "forward":
         codon_list = ["TGA", "TAA", "TAG"]
@@ -54,18 +47,10 @@ def expandStartPostion(record, hit_start, strand):
         first_pos = first_pos - 3
 
     if strand == "forward":
-        # print (record.name)
-        # print ('mizzy')
-        # print (codon)
         if record.sequence[start_pos : start_pos + 3] in start_codons:
             return start_pos
         else:
             # Start of hmmer hit was not a start codon, so go forwards to find it
-
-            # print ("Do something else")
-            # print(record.sequence)
-            # print(record.sequence[hit_start])
-            # print(record.sequence[hit_start : hit_start + 50])
 
             first_pos = hit_start
             second_pos = hit_start + 3
@@ -89,9 +74,9 @@ def expandEndPosition(record, hit_end, strand):
     """
     Expanding rightwards on a genome, so at the end of something on the forward strand, but at the start of something on
      the backwards strand
-    :param record:
-    :param hit_end:
-    :param strand:
+    :param record: The genome record
+    :param hit_end: Where the hit ended
+    :param strand: The direction of the strand
     :return:
     """
 
@@ -139,6 +124,12 @@ def expandEndPosition(record, hit_end, strand):
 
 
 def HMMread(path, record=None, expand=False):
+    """
+    Read a HMMER result file and associate the hits with a genome record
+    :param path: Filepath to HMMER output file
+    :param record: The genome record
+    :param expand: Boolean indicating whether we want to pull just the original hit or expand to open reading frame
+    """
     hmm_dict = {}
     record.id
 
@@ -237,10 +228,6 @@ def HMMread(path, record=None, expand=False):
                         if add:
 
                             # Extract the genomic region to add to the Hit record
-
-                            print("lets add them")
-                            print(new_start)
-                            print(new_end)
                             sequence = record.sequence[int(new_start) : int(new_end)]
 
                             hit = models.Hits(
@@ -254,12 +241,6 @@ def HMMread(path, record=None, expand=False):
                                 strand=strand,
                                 sequence=sequence,
                             )
-
-                            print("we are adding something in")
-
-                            print(new_reg)
-                            print(hit.start)
-                            print(hit.end)
                             curr.hits.append(hit)
                             curr.save()
                     i += 1

@@ -670,7 +670,6 @@ def parse_args(args):
         action="store_true",
     )
     parser.add_argument("-ao", "--ancestral_order")
-    parser.add_argument("-mlgo", "--ref_ml_go_dict")
 
     return parser.parse_args(args)
 

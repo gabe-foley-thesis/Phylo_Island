@@ -2893,6 +2893,6 @@ with warnings.catch_warnings():
     )
 
     admin.add_view(FeatureLogView(name="Feature Log", endpoint="features"))
-    admin.add_view(
-        DocumentationView(name="Documentation & FAQ", endpoint="documentation")
-    )
+    # admin.add_view(
+    #     DocumentationView(name="Documentation & FAQ", endpoint="documentation")
+    # )
