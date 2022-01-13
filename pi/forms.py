@@ -14,7 +14,9 @@ from wtforms.validators import DataRequired
 
 
 class LoginForm(FlaskForm):
-    """Login form to access Phylo Island"""
+    """
+    Login form to access Phylo Island
+    """
 
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
@@ -92,9 +94,6 @@ class SetupForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
-# class DeleteReferenceForm(FlaskForm):
-
-
 class DeleteForm(FlaskForm):
     """
     Form for deleting references
@@ -115,7 +114,7 @@ class GenomeOverviewSelectForm(FlaskForm):
 
 class GenomeDiagramSelectForm(FlaskForm):
     """
-    Form for selecting which genomes to look at in the Genome Diagram
+    Form for selecting options on the Genome Diagram page
     """
 
     genome = SelectField("Genome", choices=[])
@@ -145,11 +144,18 @@ class GenomeDiagramSelectForm(FlaskForm):
 
 
 class GenomeByNameForm(FlaskForm):
+    """
+    Form for searching for genomes by name
+    """
+
     genome_by_name = StringField("Search by name", [validators.DataRequired()])
     search_by_name = SubmitField("Select genome")
 
 
 class GenomeDiagramPageForm(FlaskForm):
+    """
+    Form for selecting which genomes to look at in the Genome Diagram
+    """
     untagged = BooleanField("Limit selection to untagged genomes")
     limit_genomes = BooleanField("Limit selection to genomes tagged with:")
     genome_tagged = SelectField(choices=[])
@@ -158,6 +164,9 @@ class GenomeDiagramPageForm(FlaskForm):
 
 
 class ChartsForm(FlaskForm):
+    """
+    Form for selecting options for the Charts
+    """
     select_tags = SelectMultipleField("Tags to include", choices=[])
     exclude_tags = SelectMultipleField("Tags to exclude", choices=[])
 
@@ -182,7 +191,7 @@ class GenomeDiagamShowRegions(FlaskForm):
 
 class GenomeHitForm(FlaskForm):
     """
-    Form for selecting which genomes to look at in the Genome Diagram
+    Form for dealing with tags on hits and deleting hits in the Genome Diagram page
     """
 
     tag = StringField("Add tag", [validators.optional()])
@@ -192,6 +201,9 @@ class GenomeHitForm(FlaskForm):
 
 
 class DownloadFastaForm(FlaskForm):
+    """
+    Form for downloading FASTA files
+    """
     region = SelectField(
         "Which region should we download?",
         choices=[
@@ -222,6 +234,9 @@ class DownloadFastaForm(FlaskForm):
 
 
 class TempFixForm(FlaskForm):
+    """
+    This was a temporary form in order to run some jobs for relabelling genomes
+    """
     fix_assoc = SubmitField("Click this to fix the associated regions in the database")
 
 
@@ -398,32 +413,3 @@ class DownloadRegionOrder(FlaskForm):
     save_to_db = BooleanField("Save to database as well", default="checked")
 
     submit = SubmitField("Submit")
-
-
-class DownloadMLGO(FlaskForm):
-    include_genome = StringField("Only include genomes tagged with - ")
-    exclude_genome = StringField("Exclude genomes tagged with - ")
-    include_hits = StringField("Only include hits tagged with - ")
-    exclude_hits = StringField("Exclude hits tagged with - ", default="hidden")
-
-    submit = SubmitField("Submit")
-
-
-class DownloadMLGOTree(FlaskForm):
-    tree_select_name = SelectField("Tree name ", choices=[])
-    download_mlgo_tree = SubmitField("Download tree in MLGO format")
-
-
-class UploadMLGOTree(FlaskForm):
-    upload_name = StringField("Name ", [validators.DataRequired()])
-
-    gene_order = FileField("Upload the geneorder.out file", [validators.DataRequired()])
-    annotated_tree = FileField(
-        "Upload the gene_order.tree file", [validators.DataRequired()]
-    )
-    upload = SubmitField("Upload")
-
-
-class SelectMLGOTree(FlaskForm):
-    select_name = SelectField("Name ", choices=[])
-    select = SubmitField("Select")
