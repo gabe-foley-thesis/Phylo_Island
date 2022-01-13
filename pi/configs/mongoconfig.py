@@ -1,6 +1,7 @@
 # Names to use for our parameters
 
-MONGODB_DB = "phylo_island_example_forever"
+# MONGODB_DB = "phylo_island_example_forever"
+MONGODB_DB = "from_pfam"
 
 # User / login configuration
 USER_APP_NAME = "Phylo Island"  # Shown in email templates and page footers
