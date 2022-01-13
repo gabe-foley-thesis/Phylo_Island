@@ -14,8 +14,6 @@ import glob
 import numpy
 
 
-
-
 # Get the genomes
 def get_genomes(args):
     species_names = utilities.readLinesFromFile(args.add_genomes)
@@ -25,16 +23,19 @@ def get_genomes(args):
 def update_profiles(args):
 
     # Ensure there is a trailing slash for the profile folder
-    profile_folder = args.add_profiles + "/" if not args.add_profiles[-1] == "/" else args.add_profiles
+    profile_folder = (
+        args.add_profiles + "/"
+        if not args.add_profiles[-1] == "/"
+        else args.add_profiles
+    )
 
     # For all the profiles in the profile folder, save them to the database and set them as the reference profile
     profiles = [x for x in os.listdir(profile_folder) if x != ".DS_Store"]
 
-
     for profile in profiles:
         profile_name = profile.split("_")[0]
 
-        file = open(profile_folder + profile, 'rb')
+        file = open(profile_folder + profile, "rb")
 
         # Save the profile to database
         utilities.save_profile(file, profile_name)
@@ -52,16 +53,16 @@ def update_genomes():
 
     genomes = [x.id for x in queries]
 
-    print('ghosty')
+    print("ghosty")
     print(genomes)
 
     del queries
 
     chunk = numpy.array_split(numpy.array(genomes), max(1, round(len(genomes) / 100)))
 
-    print ('chunk')
+    print("chunk")
 
-    print (chunk)
+    print(chunk)
     print(len(chunk))
 
     for genomes in chunk:
@@ -70,31 +71,31 @@ def update_genomes():
         profiles = models.Profile.objects.all()
 
         for profile in profiles:
-            get_feature_location_with_profile_cmd(queries, "pi/hmm_outputs", profile.name, "", "", profile.name)
+            get_feature_location_with_profile_cmd(
+                queries, "pi/hmm_outputs", profile.name, "", "", profile.name
+            )
 
         del profiles
         del queries
 
 
-
 def delete_profiles(args):
 
     # Ensure there is a trailing slash for the profile folder
-    profile_folder = args.add_profiles + "/" if not args.add_profiles[-1] == "/" else args.add_profiles
+    profile_folder = (
+        args.add_profiles + "/"
+        if not args.add_profiles[-1] == "/"
+        else args.add_profiles
+    )
 
     # For all the profiles in the profile folder, save them to the database and set them as the reference profile
     profiles = [x for x in os.listdir(profile_folder) if x != ".DS_Store"]
 
     profile_names = [profile.split("_")[0] for profile in profiles]
 
-
-
-
     # Delete the profiles from the database (so we can easily update them with new ones if need be)
     profiles_to_delete = models.Profile.objects(name__in=profile_names)
     profiles_to_delete.delete()
-
-
 
 
 def get_genomes_cmd(species_names):
@@ -104,7 +105,7 @@ def get_genomes_cmd(species_names):
     start_time = timeit.default_timer()
     for species_name in species_names:
         print("Species name is ", species_name)
-        destinations = ['reference genome', "representative genome", "assembly"]
+        destinations = ["reference genome", "representative genome", "assembly"]
 
         genome_results = getGenomes.add_genome(species_name, destinations, single=True)
 
@@ -115,9 +116,11 @@ def get_genomes_cmd(species_names):
 
             # Couldn't find it in RefSeq, let's try genbank
             destinations = ["genbank"]
-            print ('it failed')
+            print("it failed")
 
-            genome_results = getGenomes.add_genome(species_name, destinations, single=True)
+            genome_results = getGenomes.add_genome(
+                species_name, destinations, single=True
+            )
 
             if genome_results and genome_results != "Fail":
 
@@ -125,21 +128,27 @@ def get_genomes_cmd(species_names):
             else:
                 failed_genomes.append(species_name)
 
-
     seconds = timeit.default_timer() - start_time
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)
 
-    periods = [('hours', hours), ('minutes', minutes), ('seconds', seconds)]
-    time_string = ', '.join('{} {}'.format(value, name)
-                            for name, value in periods
-                            if value)
+    periods = [("hours", hours), ("minutes", minutes), ("seconds", seconds)]
+    time_string = ", ".join(
+        "{} {}".format(value, name) for name, value in periods if value
+    )
 
-    print('\nFINISHED GETTING RECORDS: Time taken was {} \n'.format(time_string))
+    print("\nFINISHED GETTING RECORDS: Time taken was {} \n".format(time_string))
     if failed_genomes:
-        print("The following genomes failed to map - \n" + " \n".join(x for x in failed_genomes) + "\n")
+        print(
+            "The following genomes failed to map - \n"
+            + " \n".join(x for x in failed_genomes)
+            + "\n"
+        )
 
-def get_feature_location_with_profile_cmd(queries, reference, profile_name, recordName, recordLocation, region):
+
+def get_feature_location_with_profile_cmd(
+    queries, reference, profile_name, recordName, recordLocation, region
+):
     """
     Annotate a genome sequence with a feature location based on a profile
     :param ids: Genome sequences to annotate
@@ -148,7 +157,6 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
     :param recordLocation: Which feature location field to update
     :return:
     """
-
 
     for query in queries:
 
@@ -160,11 +168,9 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
         # Get the nucleotide sequence of the genome
         nuc_seq = Bio.Seq.Seq(str(query.sequence))
 
-        seq_record = SeqRecord(Seq(query.sequence), '', '', '')
+        seq_record = SeqRecord(Seq(query.sequence), "", "", "")
 
         # seq_record = SeqRecord(seq=Seq(nuc_seq, Alphabet()), id='', name='', description='', dbxrefs=[])
-
-
 
         # outpath = reference + "/" + query.name + "/" + query.species + "/" + region + "/"
         # outpath = outpath.replace(" ", "_")
@@ -173,7 +179,7 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
 
         outpath = outpath.replace(" ", "_")
 
-        print ("outpath is " + outpath)
+        print("outpath is " + outpath)
 
         # Check three forward reading frames
         if not os.path.exists(outpath):
@@ -185,10 +191,20 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
                 strand = "_forward_" + str(i) if forward else "_backward_" + str(i)
                 sequence = nuc_seq[i:] if forward else nuc_seq.reverse_complement()[i:]
 
-                cleaned_path = outpath + query.name.replace("/",
-                                                               "_") + strand + "_translated_genome.fasta"
-                hmmsearch_results = outpath + region + "/" + query.name.replace("/",
-                                                                    "_") + strand + "_hmmsearch_results.fasta"
+                cleaned_path = (
+                    outpath
+                    + query.name.replace("/", "_")
+                    + strand
+                    + "_translated_genome.fasta"
+                )
+                hmmsearch_results = (
+                    outpath
+                    + region
+                    + "/"
+                    + query.name.replace("/", "_")
+                    + strand
+                    + "_hmmsearch_results.fasta"
+                )
                 domScore = 100
 
                 cleaned_path = cleaned_path.replace(" ", "_")
@@ -196,21 +212,31 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
 
                 if not os.path.isfile(cleaned_path):
 
-                    print ('Making a new file')
+                    print("Making a new file")
 
                     # Translate the nucleotide genome sequence to a protein sequence
-                    with open(cleaned_path, 'w') as handle:
+                    with open(cleaned_path, "w") as handle:
 
                         if query.name == "<unknown name>":
-                            handle.write(">" + query.description + "\n" + str(
-                                sequence.translate(stop_symbol="*")))
+                            handle.write(
+                                ">"
+                                + query.description
+                                + "\n"
+                                + str(sequence.translate(stop_symbol="*"))
+                            )
                         else:
 
-                            handle.write(">" + query.description + "\n" + str(
-                                sequence.translate(stop_symbol="*")))
+                            handle.write(
+                                ">"
+                                + query.description
+                                + "\n"
+                                + str(sequence.translate(stop_symbol="*"))
+                            )
 
-                    print("Writing the %s sequence with the species %s to %s" % (
-                    query.name, query.species, cleaned_path))
+                    print(
+                        "Writing the %s sequence with the species %s to %s"
+                        % (query.name, query.species, cleaned_path)
+                    )
 
                     while not os.path.exists(cleaned_path):
                         time.sleep(1)
@@ -220,14 +246,24 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
                     if not os.path.exists(outpath + "/" + region):
                         os.mkdir(outpath + "/" + region)
 
-                    stdoutdata = subprocess.getoutput("hmmsearch -o %s --domT %s %s %s" % (
-                    hmmsearch_results, domScore, 'pi/tmp/' + region + "_profile.hmm", cleaned_path))
+                    stdoutdata = subprocess.getoutput(
+                        "hmmsearch -o %s --domT %s %s %s"
+                        % (
+                            hmmsearch_results,
+                            domScore,
+                            "pi/tmp/" + region + "_profile.hmm",
+                            cleaned_path,
+                        )
+                    )
 
                     print(stdoutdata)
                     # result = subprocess.call(["hmmsearch -o %s %s %s" % (hmmsearch_results, reference, cleaned_path)])
 
-                    print("The results from the HMM search have been written to %s \n" % hmmsearch_results)
-                     # read_hmmer_results(hmmsearch_results)
+                    print(
+                        "The results from the HMM search have been written to %s \n"
+                        % hmmsearch_results
+                    )
+                    # read_hmmer_results(hmmsearch_results)
                     # result = subprocess.call(["hmmsearch", 'files/output.txt', reference, cleaned_path], stdout=subprocess.PIPE)
                     # for x in result:
                     #     print (x)
@@ -235,38 +271,49 @@ def get_feature_location_with_profile_cmd(queries, reference, profile_name, reco
         hmmerout = []
         hmmerout_expanded = []
 
-        reg = os.path.join(reference + "/" + query.name + "/" + query.species.replace(" ", "_") + "/"  + profile_name)
+        reg = os.path.join(
+            reference
+            + "/"
+            + query.name
+            + "/"
+            + query.species.replace(" ", "_")
+            + "/"
+            + profile_name
+        )
 
-        print (reg)
+        print(reg)
 
         hmmerout.append(resultread.HMMread(reg, query))
         hmmerout_expanded.append(resultread.HMMread(reg, query, expand=True))
 
-        for infile in glob.glob(reg + '/*.fasta'):
+        for infile in glob.glob(reg + "/*.fasta"):
             utilities.remove_file(infile)
+
 
 def get_overview():
     queries = models.GenomeRecords.objects.all().timeout(False)
-    print (f"There are {len(queries)} genomes stored in the database\n")
+    print(f"There are {len(queries)} genomes stored in the database\n")
 
-    print ("The genomes are - \n")
-
+    print("The genomes are - \n")
 
     for query in queries:
-        print (query.description + "\n")
+        print(query.description + "\n")
 
-        print (query.hits)
+        print(query.hits)
 
         for hit in sorted(query.hits, key=lambda hit: int(hit.start)):
-            if 'expanded' in hit.region:
-                print (f"{hit.region} - {hit.start} : {hit.end}" )
+            if "expanded" in hit.region:
+                print(f"{hit.region} - {hit.start} : {hit.end}")
 
-
-
-        print ("And it has hits for " + " and ".join([hit.region for hit in query.hits if "expanded" not in
-                                                      hit.region]))
-        print ("And it has the following tags - " + " ".join([tag for tag in query.tags]))
+        print(
+            "And it has hits for "
+            + " and ".join(
+                [hit.region for hit in query.hits if "expanded" not in hit.region]
+            )
+        )
+        print(
+            "And it has the following tags - " + " ".join([tag for tag in query.tags])
+        )
 
         # print ("Gene order is " + " ".join(hit.region for hit ))
-        print ()
-
+        print()

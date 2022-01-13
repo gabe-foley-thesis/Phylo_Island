@@ -215,13 +215,13 @@ def HMMread(path, record=None, expand=False):
                         object_id = ObjectId()
 
                         hit = models.Hits(
-                            id = object_id,
-                            name = record.name,
-                            region = new_reg,
-                            score = new_score,
-                            start = new_start,
-                            end = new_end,
-                            expand = expand,
+                            id=object_id,
+                            name=record.name,
+                            region=new_reg,
+                            score=new_score,
+                            start=new_start,
+                            end=new_end,
+                            expand=expand,
                         )
 
                         # TODO Make the hit check query better here
@@ -244,15 +244,15 @@ def HMMread(path, record=None, expand=False):
                             sequence = record.sequence[int(new_start) : int(new_end)]
 
                             hit = models.Hits(
-                                id = object_id,
-                                name = record.name,
-                                region = new_reg,
-                                score = new_score,
-                                start = new_start,
-                                end = new_end,
-                                expand = expand,
-                                strand = strand,
-                                sequence = sequence,
+                                id=object_id,
+                                name=record.name,
+                                region=new_reg,
+                                score=new_score,
+                                start=new_start,
+                                end=new_end,
+                                expand=expand,
+                                strand=strand,
+                                sequence=sequence,
                             )
 
                             print("we are adding something in")

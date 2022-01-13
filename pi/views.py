@@ -32,7 +32,7 @@ import json
 import warnings
 import math
 from ete3 import PhyloTree
-from mongoengine.queryset.visitor import  Q
+from mongoengine.queryset.visitor import Q
 
 ref_names = [
     "A1",
@@ -1076,6 +1076,7 @@ class DownloadRegionOrderView(BaseView):
             region_order_names=region_order_names,
         )
 
+
 class SequenceRecordsView(ModelView):
     edit_modal = True
     can_create = False
@@ -1096,8 +1097,7 @@ class SequenceRecordsView(ModelView):
             align_list = []
             for record in query.all():
                 align_record = SeqRecord(
-                    Seq(record.sequence),
-                    id=str(record.name) + "_" + "seq",
+                    Seq(record.sequence), id=str(record.name) + "_" + "seq"
                 )
                 align_list.append(align_record)
 
@@ -2012,7 +2012,7 @@ class GenomeDetailView(BaseView):
 
             elif limit_genomes:
                 print("selecing limited genomes")
-                selection = models.GenomeRecords.objects(tags_nin=['Incomplete'])
+                selection = models.GenomeRecords.objects(tags_nin=["Incomplete"])
 
                 # selection = models.GenomeRecords.objects(Q(tags=genome_tagged[0]) & Q(tags_nin=['Incomplete']))
                 print(len(selection))

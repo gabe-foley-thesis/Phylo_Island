@@ -16,6 +16,7 @@ from Bio import SeqIO, AlignIO, SearchIO
 import pickle
 import ete3
 from configs.auto_classifier import original_classifications
+
 # from genome_overview import models
 
 import getGenomes
@@ -1269,7 +1270,6 @@ def rename_duplicates(genome_name, old):
 
 
 def test_auto_classify(queries, skip_tags):
-
 
     test_results = ""
 

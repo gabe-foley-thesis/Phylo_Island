@@ -399,8 +399,6 @@ def download_fasta_regions(
                     or bool(set(hit["tags"]).intersection(set(include_hits)))
                 ) and not bool(set(hit["tags"]).intersection(set(exclude_hits))):
 
-
-
                     sequence = Seq(hit["sequence"])
 
                     if hit["strand"] == "backward":
@@ -609,7 +607,6 @@ def write_region_order(
 
         renamed_regions = utilities.rename_duplicates(genome.name, regions)
 
-
         with open(path, "a") as region_order:
             region_string = ",".join(x for x in renamed_regions)
             region_order.write(">" + genome.name + "\n")
@@ -634,7 +631,6 @@ def write_mlgo_order(
 
     # Clear previous file if it exists
     open(path, "w").close()
-
 
     for genome in genomes:
         hits = sorted(

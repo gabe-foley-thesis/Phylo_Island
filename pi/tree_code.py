@@ -1,11 +1,4 @@
-from ete3 import (
-    PhyloTree,
-    Tree,
-    TreeStyle,
-    TextFace,
-    SeqMotifFace,
-    NodeStyle
-)
+from ete3 import PhyloTree, Tree, TreeStyle, TextFace, SeqMotifFace, NodeStyle
 import sys
 import argparse
 import pickle
@@ -25,6 +18,7 @@ def load_tree(tree_path, aln_path=None):
     """
     tree = Tree(tree_path, format=1)
     return tree
+
 
 def get_region_domains(regions):
     region_domains = []

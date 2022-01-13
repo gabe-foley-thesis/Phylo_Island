@@ -11,7 +11,6 @@ import refseq_code as refseq_code
 import glob
 
 
-
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-g", "--add_genomes", help="path to list of species")

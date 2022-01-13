@@ -6,6 +6,7 @@ from wtforms.validators import required
 from wtforms.widgets import FileInput
 from phyloisland import app, db
 
+
 class User(db.DynamicDocument, UserMixin):
     """
     User model

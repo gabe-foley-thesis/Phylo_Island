@@ -1,4 +1,3 @@
-
 def seqdescription_formatter(view, context, model, name):
     """
     Format a sequence description so that you only visualise the start of a sequence
