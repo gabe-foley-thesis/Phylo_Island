@@ -1894,6 +1894,11 @@ class GenomeDetailView(BaseView):
 
         # untagged = False
 
+
+        # Changed this to just hide incomplete (not untagged)
+
+
+
         if untagged:
             if models.GenomeRecords.objects(tags=[""]).count() != 0:
                 genome_count = models.GenomeRecords.objects(tags=[""]).count()
@@ -2012,24 +2017,45 @@ class GenomeDetailView(BaseView):
 
             elif limit_genomes:
                 print("selecing limited genomes")
-                selection = models.GenomeRecords.objects(tags_nin=["Incomplete"])
+                # selection = models.GenomeRecords.objects(tags_nin=["Incomplete"])
 
                 # selection = models.GenomeRecords.objects(Q(tags=genome_tagged[0]) & Q(tags_nin=['Incomplete']))
-                print(len(selection))
+                # print(len(selection))
                 select_form.genome.choices = [
                     (genome.id, genome.name + " " + genome.species)
-                    for genome in selection[
+                    for genome in models.GenomeRecords.objects()[
                         specific_choice : specific_choice + records_per_page
                     ]
                 ]
 
             else:
 
+                print ("Drop the incomplete genomes")
+
+                # print (len(models.GenomeRecords.objects()))
+
+                # selection = models.GenomeRecords.objects(tags_nin=["Incomplete"])
+                # incomplete = models.GenomeRecords.objects(tags=['Incomplete'])
+
+                # print(len(incomplete))
+
+                # incomplete_ids = [genome.id for genome in incomplete]
+
+                # print ('Number of incompletes')
+                # print(len(incomplete_ids))
+
+                # completes = [genome for genome in models.GenomeRecords.objects() if genome.id not in incomplete_ids]
+
+                genome1 = models.GenomeRecords.objects()[1]
+
+                print (genome1.tags)
+
                 select_form.genome.choices = [
                     (genome.id, genome.name + " " + genome.species)
                     for genome in models.GenomeRecords.objects()[
                         specific_choice : specific_choice + records_per_page
                     ]
+                    if 'Incomplete' not in genome.tags
                 ]
 
             # The list of pages to choose from
