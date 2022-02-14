@@ -317,3 +317,43 @@ def get_overview():
 
         # print ("Gene order is " + " ".join(hit.region for hit ))
         print()
+
+
+def get_custom_overview():
+    from phyloisland import db
+
+    # genome_records = db.get_collection("genome_records")
+
+    # queries = models.GenomeRecords.objects.all().timeout(False)
+
+    queries = models.GenomeRecords.objects(__raw__={'tags': {'$nin': ['Incomplete', 'Multiple', 'Simple']}})
+
+
+    # print (genome_records.find_one({"tags": {"$nin": ['Incomplete', 'Multiple', 'Simple']}}))
+    print(f"There are {len(queries)} genomes stored in the database\n")
+
+    print (queries[0])
+
+    print("The genomes are - \n")
+
+    # for query in queries:
+    #     print(query.description + "\n")
+    #
+    #     print(query.hits)
+    #
+    #     for hit in sorted(query.hits, key=lambda hit: int(hit.start)):
+    #         if "expanded" in hit.region:
+    #             print(f"{hit.region} - {hit.start} : {hit.end}")
+    #
+    #     print(
+    #         "And it has hits for "
+    #         + " and ".join(
+    #             [hit.region for hit in query.hits if "expanded" not in hit.region]
+    #         )
+    #     )
+    #     print(
+    #         "And it has the following tags - " + " ".join([tag for tag in query.tags])
+    #     )
+    #
+    #     # print ("Gene order is " + " ".join(hit.region for hit ))
+    #     print()

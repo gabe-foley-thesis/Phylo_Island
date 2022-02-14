@@ -33,6 +33,10 @@ parser.add_argument(
 parser.add_argument(
     "-o", "--overview", help="get overview of database", action="store_true"
 )
+
+parser.add_argument(
+    "-co", "--custom_overview", help="get overview of database", action="store_true"
+)
 parser.add_argument(
     "-dg", "--delete_genomes", help="delete genomes", action="store_true"
 )
@@ -81,6 +85,10 @@ if args.update_genomes:
 if args.overview:
     print("Overview of database")
     cmd_code.get_overview()
+
+if args.custom_overview:
+    print("Custom overview of database")
+    cmd_code.get_custom_overview()
 
 if args.delete_genomes:
     queries = models.GenomeRecords.objects.all().timeout(False).delete()

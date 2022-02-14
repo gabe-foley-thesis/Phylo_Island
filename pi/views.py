@@ -940,6 +940,8 @@ class DownloadFastaView(BaseView):
                     print(align)
                     print("split strands")
                     print(split_strands)
+
+                    print (os.getcwd())
                     # if include_genome == [""]:
                     #     include_genome = None
                     #
@@ -1895,8 +1897,6 @@ class GenomeDetailView(BaseView):
         # untagged = False
 
 
-        # Changed this to just hide incomplete (not untagged)
-
 
 
         if untagged:
@@ -2055,7 +2055,6 @@ class GenomeDetailView(BaseView):
                     for genome in models.GenomeRecords.objects()[
                         specific_choice : specific_choice + records_per_page
                     ]
-                    if 'Incomplete' not in genome.tags
                 ]
 
             # The list of pages to choose from
@@ -2182,6 +2181,7 @@ class ProfileView(ModelView):
 
             if not has_app_context():
                 ref_names = []
+                print ('ref names set here')
             else:
                 current = models.User.objects().get(username=str(current_user.username))
                 ref_names = current.references
@@ -2289,6 +2289,11 @@ class ProfileView(ModelView):
     @_action_form_class.setter
     def _action_form_class(self, value):
         pass
+
+
+    print ('hello ref names')
+
+    print (ref_names)
 
     for name in ref_names:
         exec(

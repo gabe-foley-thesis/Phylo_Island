@@ -255,7 +255,9 @@ def search_regions_with_profiles(region_to_search, profile_ids):
 
     regions = models.RegionRecords.objects.get(name=region_to_search)
 
-    profile_folder = f"./pi/tmp/profiles_{regions.name}/"
+    profile_folder = f"./tmp/profiles_{regions.name}/"
+
+    print (os.getcwd())
 
     os.mkdir(profile_folder)
 
@@ -278,7 +280,8 @@ def search_regions_with_profiles(region_to_search, profile_ids):
         profile = models.Profile.objects().get(id=profile_id)
 
         with open(profile_folder + profile.name + "_profile.hmm", "w+") as profile_path:
-            profile_path.write(profile.profile.read())
+
+            profile_path.write(profile.profile.read().decode())
 
         while not os.path.exists(profile_folder + profile.name + "_profile.hmm"):
             time.sleep(1)
@@ -1346,6 +1349,10 @@ def colour_alignment_by_profiles(alignment, profiles):
         "TcC_BLAST_500": "blue",
         "Rhs_repeat": "green",
         "Overlap": "pink",
+        'YenA1_Chi2_interface' : 'lightPurple',
+        'yenA2_foot' : 'lightblue',
+        'Y_pseudotuberculosis_coiled-coil' : 'lightgreen',
+        'YenA1_pseudo_RBD-A' : 'red'
     }
 
     split = [x for x in alignment.split(">") if len(x) > 0]
